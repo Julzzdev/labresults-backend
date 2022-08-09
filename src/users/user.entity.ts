@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
@@ -14,12 +14,14 @@ export class User {
   @Prop({ default: false })
   isAdmin: boolean;
 
-  @Prop({ type: Object })
-  preferences: {
-    darkMode: { type: boolean; default: false };
-    primaryColor: string;
-    secondaryColor: string;
-  };
+  @Prop(
+    raw({
+      darkMode: { type: Boolean, default: false },
+      primaryColor: { type: String, default: '#ff6b6b' },
+      secondaryColor: { type: String, default: '#f783ac' },
+    }),
+  )
+  preferences: Record<string, any>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
