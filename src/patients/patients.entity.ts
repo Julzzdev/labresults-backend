@@ -13,6 +13,9 @@ export class Patient {
 
   @Prop({ required: true })
   gender: boolean;
+
+  @Prop({ required: false })
+  dateOfBirth: Date;
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);

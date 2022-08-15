@@ -4,10 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { ReportsService } from './reports/reports.service';
 import { ReportsModule } from './reports/reports.module';
 import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
+import { Report, ReportSchema } from './reports/reports.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +20,6 @@ import { PatientsModule } from './patients/patients.module';
     PatientsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ReportsService],
+  providers: [AppService],
 })
 export class AppModule {}
