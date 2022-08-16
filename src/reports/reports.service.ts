@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Report, ReportDocument, Result } from './reports.entity';
+import { Report, ReportDocument } from './reports.entity';
 
 @Injectable()
 export class ReportsService {
@@ -12,7 +12,7 @@ export class ReportsService {
   create(
     patient: string,
     test: string,
-    results: Array<Result>,
+    results: Record<string, any>,
     capturedBy: string,
   ) {
     const createdReport = new this.reportModel({

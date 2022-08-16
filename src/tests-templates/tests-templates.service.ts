@@ -1,13 +1,17 @@
 import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Test, TestDocument, TestField } from './tests.entity';
+import { Test, TestDocument } from './tests.entity';
 @Injectable()
 export class TestsTemplatesService {
   constructor(@InjectModel(Test.name) private testModel: Model<TestDocument>) {}
 
-  create(name: string, data: TestField[]): Promise<Test> {
-    const createdTest = new this.testModel({ name, data });
+  create(
+    name: string,
+    method: string,
+    data: Record<string, any>[],
+  ): Promise<Test> {
+    const createdTest = new this.testModel({ name, method, data });
 
     return createdTest.save();
   }

@@ -1,10 +1,15 @@
-import { IsArray, IsString } from 'class-validator';
-import { TestField } from '../tests.entity';
+import { IsArray, IsString, ValidateNested } from 'class-validator';
 
 export class CreateTemplateDto {
   @IsString()
   name: string;
 
+  @IsString()
+  method: string;
+
+  @IsString()
+  equipment: string;
+
   @IsArray()
-  data: TestField[];
+  data: Record<string, any>[];
 }

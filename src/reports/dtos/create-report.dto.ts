@@ -1,6 +1,4 @@
 import { IsArray, IsString } from 'class-validator';
-import { Result } from '../reports.entity';
-
 export class CreateReportDto {
   @IsString()
   patient: string;
@@ -9,5 +7,8 @@ export class CreateReportDto {
   test: string;
 
   @IsArray()
-  results: Result[];
+  results: Record<string, any>[];
+
+  @IsString()
+  capturedBy: string;
 }

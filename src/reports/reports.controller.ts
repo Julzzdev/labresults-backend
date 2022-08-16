@@ -21,13 +21,11 @@ export class ReportsController {
 
   @Post('/')
   createReport(@Body() body: CreateReportDto) {
-    const userId = '62f289f6b8663f2be3efe4ab';
-
     return this.reportsService.create(
       body.patient,
       body.test,
       body.results,
-      userId,
+      body.capturedBy,
     );
   }
 }
