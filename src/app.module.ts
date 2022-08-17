@@ -7,7 +7,6 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
-import { Report, ReportSchema } from './reports/reports.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
