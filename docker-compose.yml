@@ -3,7 +3,7 @@ services:
   dev:
     build:
       context: .
-      target: development
+      dockerfile: Dockerfile.dev
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -31,3 +31,7 @@ services:
       - /usr/src/app/node_modules
       - .:/usr/src/app
     command: ['npm', 'run', 'test']
+networks:
+  default:
+    external:
+      name: 'external'
