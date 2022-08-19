@@ -1,12 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Test } from 'src/tests-templates/tests.entity';
 
 export type PatientDocument = Patient & Document;
 
 @Schema()
 export class Patient {
   @Prop({ required: true })
-  name: string;
+  firstname: string;
+
+  @Prop({ required: false })
+  secondname: string;
+
+  @Prop({ required: true })
+  lastname1: string;
+
+  @Prop({ required: false })
+  lastname2: string;
 
   @Prop({ required: true })
   age: number;
@@ -16,6 +26,15 @@ export class Patient {
 
   @Prop({ required: false })
   dateOfBirth: Date;
+
+  @Prop({ required: false })
+  email: string;
+
+  @Prop({ required: false })
+  phone: string;
+
+  @Prop({ required: true, type: [mongoose.Schema.Types.ObjectId], ref: 'Test' })
+  tests: Test[];
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);

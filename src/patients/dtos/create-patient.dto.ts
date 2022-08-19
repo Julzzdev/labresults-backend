@@ -1,9 +1,29 @@
-import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
+import { Test } from 'src/tests-templates/tests.entity';
 
 export class CreatePatientDto {
   @IsString()
-  name: string;
+  firstname: string;
+
+  @IsOptional()
+  @IsString()
+  secondname: string;
+
+  @IsString()
+  lastname1: string;
+
+  @IsOptional()
+  @IsString()
+  lastname2: string;
 
   @IsNumber()
   age: number;
@@ -14,4 +34,15 @@ export class CreatePatientDto {
   @Type(() => Date)
   @IsDate()
   dateOfBirth: Date;
+
+  @IsOptional()
+  @IsEmail()
+  email: string;
+
+  @IsOptional()
+  @IsString()
+  phone: string;
+
+  @IsArray()
+  tests: Test[];
 }

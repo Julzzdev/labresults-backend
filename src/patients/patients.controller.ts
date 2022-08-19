@@ -27,10 +27,16 @@ export class PatientsController {
   @Post('/')
   createPatient(@Body() body: CreatePatientDto) {
     return this.patientsService.create(
-      body.name,
+      body.firstname,
+      body.lastname1,
       body.age,
       body.gender,
       body.dateOfBirth,
+      body.tests,
+      body.secondname,
+      body.lastname2,
+      body.email,
+      body.phone,
     );
   }
 
