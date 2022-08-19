@@ -3,9 +3,6 @@ export class CreateReportDto {
   @IsString()
   patient: string;
 
-  @IsString()
-  test: string;
-
   @IsArray()
   results: Record<string, any>[];
 
