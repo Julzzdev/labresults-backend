@@ -8,6 +8,9 @@ export class Test {
   name: string;
 
   @Prop({ required: true })
+  code: string;
+  
+  @Prop({ required: true })
   method: string;
 
   @Prop({ required: false })
