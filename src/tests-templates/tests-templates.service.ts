@@ -8,10 +8,18 @@ export class TestsTemplatesService {
 
   create(
     name: string,
+    code: string,
     method: string,
     data: Record<string, any>[],
+    equipment?: string,
   ): Promise<Test> {
-    const createdTest = new this.testModel({ name, method, data });
+    const createdTest = new this.testModel({
+      name,
+      code,
+      method,
+      data,
+      equipment,
+    });
 
     return createdTest.save();
   }

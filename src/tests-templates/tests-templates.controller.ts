@@ -21,7 +21,13 @@ export class TestsTemplatesController {
 
   @Post('/')
   createTemplate(@Body() body: CreateTemplateDto) {
-    return this.templateService.create(body.name, body.method, body.data);
+    return this.templateService.create(
+      body.name,
+      body.code,
+      body.method,
+      body.data,
+      body.equipment,
+    );
   }
 
   @Patch('/:_id')
