@@ -6,17 +6,23 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from 'src/reports/dtos/create-report.dto';
+import { GetReportsDto } from './dtos/get-reports.dto';
 
 @Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Get('/')
-  getReports() {
-    return this.reportsService.findAll();
+  getReports(@Query() query: GetReportsDto) {
+    return this.reportsService.findAll(
+      (query.startDate = new Date().toString()),
+      (query.endDate = new Date().toString()),
+      query.page,
+    );
   }
 
   @Get('/:_id')

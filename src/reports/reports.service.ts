@@ -24,6 +24,7 @@ export class ReportsService {
       patient,
       results,
       capturedBy,
+      createdAt: Date,
     });
 
     return createdReport.save();
@@ -40,11 +41,21 @@ export class ReportsService {
       .populate('capturedBy', 'name');
   }
 
-  async findAll() {
-    return await this.reportModel
-      .find()
+  async findAll(startDate: string, endDate: string, page: string) {
+    const reports = await this.reportModel
+      .find({ createdAt: { $gte: startDate, $lte: endDate } })
+      .limit(15 * 1)
+      .skip((+page - 1) * 15)
       .populate('patient')
       .populate('capturedBy', 'username');
+
+    const count = await this.reportModel.countDocuments();
+
+    return {
+      reports,
+      totalPages: Math.ceil(count / 15),
+      page: page,
+    };
   }
 
   async delete(id: string) {

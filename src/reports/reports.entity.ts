@@ -15,6 +15,9 @@ export class Report {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   capturedBy: User;
+
+  @Prop({ required: true })
+  createdAt: Date;
 }
 
 export const ReportSchema = SchemaFactory.createForClass(Report);
