@@ -1,8 +1,9 @@
 import { Expose } from 'class-transformer';
+import mongoose from 'mongoose';
 
 export class UserDto {
   @Expose()
-  _id: string;
+  id: mongoose.Schema.Types.ObjectId;
 
   @Expose()
   username: string;
