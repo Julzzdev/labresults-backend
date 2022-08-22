@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,6 +9,7 @@ import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
 import { MailerModule } from './mailer/mailer.module';
 import { MailerModule as Mailer } from '@nestjs-modules/mailer';
+import cookieSession from 'cookie-session';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,4 +25,15 @@ import { MailerModule as Mailer } from '@nestjs-modules/mailer';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private configService: ConfigService) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          keys: [this.configService.get('COOKIE_KEY')],
+        }),
+      )
+      .forRoutes('*');
+  }
+}
