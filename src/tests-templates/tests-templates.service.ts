@@ -12,6 +12,7 @@ export class TestsTemplatesService {
     method: string,
     data: Record<string, any>[],
     equipment?: string,
+    technique?: string,
   ): Promise<Test> {
     const createdTest = new this.testModel({
       name,
@@ -19,6 +20,7 @@ export class TestsTemplatesService {
       method,
       data,
       equipment,
+      technique,
     });
 
     return createdTest.save();

@@ -27,6 +27,7 @@ export class TestsTemplatesController {
       body.method,
       body.data,
       body.equipment,
+      body.technique,
     );
   }
 

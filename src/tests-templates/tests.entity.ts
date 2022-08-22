@@ -9,12 +9,15 @@ export class Test {
 
   @Prop({ required: true })
   code: string;
-  
+
   @Prop({ required: true })
   method: string;
 
   @Prop({ required: false })
   equipment: string;
+
+  @Prop({ required: false })
+  technique: string;
 
   @Prop({ type: Array, required: true })
   data: Record<string, any>[];

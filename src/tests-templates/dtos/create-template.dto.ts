@@ -14,6 +14,10 @@ export class CreateTemplateDto {
   @IsString()
   equipment: string;
 
+  @IsOptional()
+  @IsString()
+  technique: string;
+
   @IsArray()
   data: Record<string, any>[];
 }
