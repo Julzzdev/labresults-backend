@@ -36,6 +36,10 @@ export class CreatePatientDto {
   dateOfBirth: Date;
 
   @IsOptional()
+  @IsString()
+  business: string;
+
+  @IsOptional()
   @IsEmail()
   email: string;
 

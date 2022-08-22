@@ -28,6 +28,9 @@ export class Patient {
   dateOfBirth: Date;
 
   @Prop({ required: false })
+  business: string;
+
+  @Prop({ required: false })
   email: string;
 
   @Prop({ required: false })

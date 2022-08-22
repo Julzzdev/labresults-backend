@@ -21,6 +21,7 @@ export class PatientsService {
     lastname2?: string,
     email?: string,
     phone?: string,
+    business?: string,
   ): Promise<Patient> {
     const createdPatient = new this.patientModel({
       firstname,
@@ -33,6 +34,7 @@ export class PatientsService {
       lastname2,
       email,
       phone,
+      business,
     });
 
     return createdPatient.save();

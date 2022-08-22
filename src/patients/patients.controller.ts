@@ -37,6 +37,7 @@ export class PatientsController {
       body.lastname2,
       body.email,
       body.phone,
+      body.business,
     );
   }
 
