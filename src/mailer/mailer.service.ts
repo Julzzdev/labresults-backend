@@ -1,20 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { Report } from 'src/reports/reports.entity';
-import { MailerService as Mailer } from '@nestjs-modules/mailer';
-
+const nodemailer = require('nodemailer');
 @Injectable()
 export class MailerService {
-  constructor(private mailerService: Mailer) {}
-
   async sendLabResults(patientEmail: string) {
-    const mail = await this.mailerService.sendMail({
-      to: 'karyuu.no.hokou@gmail.com',
-      from: process.env.MAIL,
-      subject: 'COVID TEST RESULTS',
-      text: 'THIS IS AN AUTOMATIC MAIL, DO NOT REPLY',
-      html: '<b>TEST</b>',
+    // TODO: add puppeteer for PDF creation and attachment
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL,
+        pass: process.env.PASS,
+      },
     });
 
-    console.log(mail);
+    let mailData = {
+      from: process.env.MAIL,
+      to: patientEmail,
+      subject: 'TEST RESULTS',
+      text: 'THIS IS AN AUTOMATIC MAIL, DO NOT REPLY',
+    };
+
+    transporter.sendMail(mailData, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+    });
   }
 }

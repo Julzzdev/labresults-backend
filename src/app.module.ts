@@ -9,24 +9,12 @@ import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
 import { MailerModule } from './mailer/mailer.module';
 import { MailerModule as Mailer } from '@nestjs-modules/mailer';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
     MongooseModule.forRoot(process.env.DB_URL),
-    Mailer.forRoot({
-      transport: {
-        host: 'smtp.google.com',
-        port: 465,
-        secure: true,
-        auth: {
-          user: 'julioolveraunt@gmail.com',
-          pass: 'qdaapfphkmigurlk',
-        },
-      },
-    }),
     UsersModule,
     ReportsModule,
     TestsTemplatesModule,
