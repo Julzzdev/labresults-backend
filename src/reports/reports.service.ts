@@ -24,7 +24,7 @@ export class ReportsService {
       patient,
       results,
       capturedBy,
-      createdAt: Date,
+      createdAt: new Date(),
     });
 
     return createdReport.save();
