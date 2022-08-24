@@ -49,7 +49,7 @@ export class PatientsService {
     if (!patient) {
       throw new NotFoundException('Patient not found');
     }
-    return patient;
+    return patient.populate('tests');
   }
 
   async update(id: string, attrs: Partial<Patient>): Promise<Patient> {

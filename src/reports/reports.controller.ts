@@ -25,14 +25,14 @@ export class ReportsController {
     );
   }
 
-  @Get('/:_id')
+  @Get('/report/:_id')
   getReport(@Param() _id: string) {
     return this.reportsService.findOne(_id);
   }
 
-  @Get('/:patientId')
-  getReportsByPatient(@Param() patientId: string) {
-    return this.reportsService.findAllPatientReport(patientId);
+  @Get('/patient/:_id')
+  getReportsByPatient(@Param() _id: string) {
+    return this.reportsService.findAllPatientReport(_id);
   }
 
   @Post('/')
