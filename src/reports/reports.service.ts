@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Patient, PatientDocument } from 'src/patients/patients.entity';
-import { Report, ReportDocument } from './reports.entity';
+import { Report, ReportDocument, Result } from './reports.entity';
 
 @Injectable()
 export class ReportsService {
@@ -11,11 +11,7 @@ export class ReportsService {
     @InjectModel(Patient.name) private patientModel: Model<PatientDocument>,
   ) {}
 
-  async create(
-    patient: string,
-    results: { test: string; data: Record<string, any>[] },
-    capturedBy: string,
-  ) {
+  async create(patient: string, results: Result[], capturedBy: string) {
     const patientExists = await this.patientModel.findById(patient);
     if (!patientExists) {
       throw new NotFoundException('The patient does not exist');
@@ -27,7 +23,7 @@ export class ReportsService {
       createdAt: new Date(),
     });
 
-    return createdReport.save();
+    return await createdReport.save();
   }
 
   async findOne(id: string) {
@@ -41,6 +37,12 @@ export class ReportsService {
         path: 'patient',
         populate: {
           path: 'tests',
+        },
+      })
+      .populate({
+        path: 'results',
+        populate: {
+          path: 'testId',
         },
       })
       .populate('capturedBy', 'name');
