@@ -37,7 +37,12 @@ export class ReportsService {
   async findAllPatientReport(patientId: string) {
     return this.reportModel
       .find({ patient: patientId })
-      .populate('patient')
+      .populate({
+        path: 'patient',
+        populate: {
+          path: 'tests',
+        },
+      })
       .populate('capturedBy', 'name');
   }
 
