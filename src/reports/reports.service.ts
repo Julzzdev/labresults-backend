@@ -13,7 +13,7 @@ export class ReportsService {
 
   async create(
     patient: string,
-    results: Record<string, any>[],
+    results: { test: string; data: Record<string, any>[] },
     capturedBy: string,
   ) {
     const patientExists = await this.patientModel.findById(patient);

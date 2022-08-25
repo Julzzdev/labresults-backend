@@ -10,8 +10,11 @@ export class Report {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Patient' })
   patient: Patient;
 
-  @Prop({ type: Array, required: true })
-  results: Record<string, any>[];
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: true })
+  results: {
+    test: { type: mongoose.Schema.Types.ObjectId; ref: 'Test' };
+    data: Record<string, any>[];
+  };
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   capturedBy: User;

@@ -1,10 +1,13 @@
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsString, ValidateNested } from 'class-validator';
 export class CreateReportDto {
   @IsString()
   patient: string;
 
-  @IsArray()
-  results: Record<string, any>[];
+  @ValidateNested()
+  results: {
+    test: string;
+    data: Record<string, any>[];
+  };
 
   @IsString()
   capturedBy: string;
