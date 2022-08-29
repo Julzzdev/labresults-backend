@@ -8,8 +8,7 @@ import { ReportsModule } from './reports/reports.module';
 import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
 import { MailerModule } from './mailer/mailer.module';
-import { MailerModule as Mailer } from '@nestjs-modules/mailer';
-import cookieSession from 'cookie-session';
+const cookieSession = require('cookie-session');
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,4 +24,14 @@ import cookieSession from 'cookie-session';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          keys: ['asdfasfd'],
+        }),
+      )
+      .forRoutes('*');
+  }
+}

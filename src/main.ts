@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors();
   app.use(
     cookieSession({
-      keys: ['jshdfjaklsdf'],
+      keys: ['asdfasfd'],
     }),
   );
   app.useGlobalPipes(
