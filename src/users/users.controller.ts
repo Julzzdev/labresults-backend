@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   Session,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -15,8 +16,7 @@ import { UsersService } from './users.service';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
@@ -25,9 +25,9 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('/whoami')
-  @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user: User) {
+  whoAmI(@Request() user: User) {
     return user;
   }
 
@@ -37,17 +37,14 @@ export class UsersController {
   }
 
   @Post('/signup')
-  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+  async createUser(@Body() body: CreateUserDto) {
     const user = await this.authService.signup(body.username, body.password);
-    session.currentUser = user;
     return user;
   }
 
   @Post('/signin')
-  async signin(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signin(body.username, body.password);
-    session.currentUser = user;
-    return user;
+  async signin(@Body() body: CreateUserDto) {
+    return this.authService.signin(body.username, body.password);
   }
 
   @Get('/users')

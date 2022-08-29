@@ -8,7 +8,6 @@ import { ReportsModule } from './reports/reports.module';
 import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
 import { MailerModule } from './mailer/mailer.module';
-const cookieSession = require('cookie-session');
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,14 +23,4 @@ const cookieSession = require('cookie-session');
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        cookieSession({
-          keys: ['asdfasfd'],
-        }),
-      )
-      .forRoutes('*');
-  }
-}
+export class AppModule {}

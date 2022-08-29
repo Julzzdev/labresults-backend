@@ -4,14 +4,19 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { JwtService } from '@nestjs/jwt';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import { User } from './user.entity';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   async signup(username: string, password: string) {
     const userExists = await this.usersService.findByUsername(username);
@@ -37,7 +42,11 @@ export class AuthService {
     if (storedHash !== hash.toString('hex')) {
       throw new BadRequestException('Incorrect password');
     }
+    const payload = { ...user };
+    const token = this.jwtService.sign(payload);
 
-    return user;
+    console.log(payload);
+
+    return token;
   }
 }
