@@ -27,8 +27,8 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/whoami')
-  whoAmI(@Request() user: User) {
-    return user;
+  whoAmI(@Request() req) {
+    return req.user;
   }
 
   @Post('/signout')
