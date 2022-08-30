@@ -31,11 +31,6 @@ export class UsersController {
     return req.user;
   }
 
-  @Post('/signout')
-  signOut(@Session() session: any) {
-    session.currentUser = null;
-  }
-
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto) {
     const user = await this.authService.signup(body.username, body.password);
