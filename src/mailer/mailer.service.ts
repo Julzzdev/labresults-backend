@@ -1,26 +1,60 @@
 import { Injectable } from '@nestjs/common';
-import { Report } from 'src/reports/reports.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Mailer, MailerDocument } from './mailer.entity';
 const nodemailer = require('nodemailer');
+const puppeteer = require('puppeteer');
 @Injectable()
 export class MailerService {
-  async sendLabResults(patientEmail: string) {
+  constructor(
+    @InjectModel(Mailer.name) private mailerModel: Model<MailerDocument>,
+  ) {}
+
+  async sendLabResults(patientEmail: string, patientId: string) {
     // TODO: add puppeteer for PDF creation and attachment
+    const mailUser = await this.mailerModel.findOne();
+
+    const browser = await puppeteer.launch({
+      executablePath: '/snap/bin/chromium',
+      args: [
+        '--headless',
+        '--disable-gpu',
+        '--full-memory-crash-report',
+        '--unlimited-storage',
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+      ],
+    });
+    const page = await browser.newPage();
+    await page.emulateTimezone('America/Mexico_City');
+    await page.goto('http://localhost:4200/reports/' + patientId, {
+      waitUntil: 'networkidle0',
+    });
+    const pdf = await page.pdf({ path: 'pdf.pdf', displayHeaderFooter: false });
+    await browser.close();
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 465,
       secure: true,
       auth: {
-        user: process.env.MAIL,
-        pass: process.env.PASS,
+        user: mailUser.mail,
+        pass: mailUser.password,
       },
     });
 
     let mailData = {
-      from: process.env.MAIL,
+      from: mailUser.mail,
       to: patientEmail,
-      subject: 'TEST RESULTS',
+      subject: 'LAB RESULTS',
       text: 'THIS IS AN AUTOMATIC MAIL, DO NOT REPLY',
+      attachments: [
+        {
+          filename: 'LAB_RESULTS.pdf',
+          content: pdf,
+        },
+      ],
     };
 
     transporter.sendMail(mailData, (error, info) => {
