@@ -19,7 +19,7 @@ services:
     ports:
       - '3000:3000'
     env_file:
-      - ./.env
+      - .env
     volumes:
       - /usr/src/app/node_modules
       - .:/usr/src/app
@@ -34,4 +34,4 @@ services:
 networks:
   default:
     external:
-      name: 'external'
+      name: 'labsnetwork'

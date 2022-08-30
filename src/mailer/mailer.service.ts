@@ -15,8 +15,8 @@ export class MailerService {
     const mailUser = await this.mailerModel.findOne();
 
     const browser = await puppeteer.launch({
+      headless: true,
       args: [
-        '--headless',
         '--disable-gpu',
         '--full-memory-crash-report',
         '--unlimited-storage',
@@ -27,10 +27,11 @@ export class MailerService {
     });
     const page = await browser.newPage();
     await page.emulateTimezone('America/Mexico_City');
-    await page.goto('http://localhost:4200/reports/' + patientId, {
+    const baseUrl = 'http://front:4200/reports/';
+    await page.goto(baseUrl + patientId, {
       waitUntil: 'networkidle0',
     });
-    const pdf = await page.pdf({ path: 'pdf.pdf', displayHeaderFooter: false });
+    const pdf = await page.pdf({ format: 'A4' });
     await browser.close();
 
     const transporter = nodemailer.createTransport({

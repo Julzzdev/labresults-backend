@@ -4,7 +4,7 @@ RUN apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpi
 
 WORKDIR /usr/src/app
 
-COPY package.json .
+COPY package.json ./
 RUN npm install
 
 COPY . .
