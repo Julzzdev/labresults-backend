@@ -15,7 +15,6 @@ export class MailerService {
     const mailUser = await this.mailerModel.findOne();
 
     const browser = await puppeteer.launch({
-      executablePath: '/snap/bin/chromium',
       args: [
         '--headless',
         '--disable-gpu',
