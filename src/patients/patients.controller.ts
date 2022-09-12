@@ -6,17 +6,23 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { Patient } from './patients.entity';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dtos/create-patient.dto';
+import { GetReportsDto } from 'src/reports/dtos/get-reports.dto';
 @Controller('patients')
 export class PatientsController {
   constructor(private patientsService: PatientsService) {}
 
   @Get('/')
-  getPatients() {
-    return this.patientsService.findAll();
+  getPatients(@Query() query: GetReportsDto) {
+    return this.patientsService.findAll(
+      (query.startDate = new Date().toString()),
+      (query.endDate = new Date().toString()),
+      query.page,
+    );
   }
 
   @Get('/:_id')
