@@ -17,7 +17,7 @@ export class PatientsController {
   constructor(private patientsService: PatientsService) {}
 
   @Get('/')
-  getPatients(@Query() query: GetReportsDto) {
+  getPatients(@Query() query: any) {
     return this.patientsService.findAll(
       (query.startDate = new Date().toString()),
       (query.endDate = new Date().toString()),

@@ -47,10 +47,15 @@ export class PatientsService {
     page: string,
   ): Promise<Patient[]> {
     return await this.patientModel
-      .find({ createdAt: { $gte: startDate, $lte: endDate } })
+      .find({
+        createdAt: {
+          $gte: new Date(new Date(startDate).setHours(0o0, 0o0, 0o0)),
+          $lte: new Date(new Date(endDate).setHours(23, 59, 59)),
+        },
+      })
       .limit(15 * 1)
-      .skip((+page - 1) * 15)
-      .populate('tests', 'name');
+      .skip((+page - 1) * 15);
+    // .populate('tests', 'name');
   }
 
   async findOne(id: string): Promise<Patient> {
