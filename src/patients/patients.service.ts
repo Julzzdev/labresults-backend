@@ -35,6 +35,7 @@ export class PatientsService {
       email,
       phone,
       business,
+      createdAt: new Date(),
     });
 
     return createdPatient.save();

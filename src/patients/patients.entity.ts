@@ -38,6 +38,9 @@ export class Patient {
 
   @Prop({ required: true, type: [mongoose.Schema.Types.ObjectId], ref: 'Test' })
   tests: Test[];
+
+  @Prop()
+  createdAt?: Date;
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
