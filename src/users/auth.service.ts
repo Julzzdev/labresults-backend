@@ -7,7 +7,6 @@ import { UsersService } from './users.service';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
-import { User } from './user.entity';
 
 const scrypt = promisify(_scrypt);
 
@@ -18,7 +17,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(username: string, password: string) {
+  async signup(
+    username: string,
+    password: string,
+    darkMode: boolean,
+    isAdmin: boolean,
+  ) {
     const userExists = await this.usersService.findByUsername(username);
     if (userExists) {
       throw new BadRequestException('Username already in use');
@@ -26,7 +30,12 @@ export class AuthService {
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(password, salt, 32)) as Buffer;
     const result = salt + '.' + hash.toString('hex');
-    const user = await this.usersService.create(username, result);
+    const user = await this.usersService.create(
+      username,
+      result,
+      darkMode,
+      isAdmin,
+    );
     return user;
   }
 

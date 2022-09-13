@@ -6,8 +6,18 @@ import { User, UserDocument } from './user.entity';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  create(username: string, password: string): Promise<User> {
-    const createdUser = new this.userModel({ username, password });
+  create(
+    username: string,
+    password: string,
+    darkMode: boolean,
+    isAdmin: boolean,
+  ): Promise<User> {
+    const createdUser = new this.userModel({
+      username,
+      password,
+      darkMode,
+      isAdmin,
+    });
 
     return createdUser.save();
   }

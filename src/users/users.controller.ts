@@ -33,12 +33,17 @@ export class UsersController {
 
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto) {
-    const user = await this.authService.signup(body.username, body.password);
+    const user = await this.authService.signup(
+      body.username,
+      body.password,
+      body.darkMode,
+      body.isAdmin,
+    );
     return user;
   }
 
   @Post('/signin')
-  async signin(@Body() body: CreateUserDto) {
+  async signin(@Body() body: any) {
     return this.authService.signin(body.username, body.password);
   }
 

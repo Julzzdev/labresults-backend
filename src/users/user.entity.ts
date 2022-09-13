@@ -10,10 +10,10 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop()
+  @Prop({ required: true })
   isAdmin: boolean;
 
-  @Prop()
+  @Prop({ required: true })
   darkMode: boolean;
 }
 
