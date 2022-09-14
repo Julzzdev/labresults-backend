@@ -7,6 +7,10 @@ export class MailerController {
 
   @Post('/')
   async sendMail(@Body() body: any) {
-    return this.mailService.sendLabResults(body.patientEmail, body.patientId);
+    return this.mailService.sendLabResults(
+      body.patientEmail,
+      body.patientId,
+      body.isFlat,
+    );
   }
 }

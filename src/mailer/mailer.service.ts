@@ -10,7 +10,11 @@ export class MailerService {
     @InjectModel(Mailer.name) private mailerModel: Model<MailerDocument>,
   ) {}
 
-  async sendLabResults(patientEmail: string, patientId: string) {
+  async sendLabResults(
+    patientEmail: string,
+    patientId: string,
+    isFlat: string,
+  ) {
     // TODO: add puppeteer for PDF creation and attachment
     const mailUser = await this.mailerModel.findOne();
 
@@ -28,7 +32,7 @@ export class MailerService {
     const page = await browser.newPage();
     await page.emulateTimezone('America/Mexico_City');
     const baseUrl = 'http://front:80/reports/';
-    await page.goto(baseUrl + patientId, {
+    await page.goto(`${baseUrl}${patientId}/${isFlat}`, {
       waitUntil: 'networkidle0',
     });
     const pdf = await page.pdf({ format: 'A4' });
