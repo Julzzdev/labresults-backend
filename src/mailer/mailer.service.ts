@@ -19,6 +19,7 @@ export class MailerService {
     const mailUser = await this.mailerModel.findOne();
 
     const browser = await puppeteer.launch({
+      executablePath: '/usr/bin/chromium-browser',
       headless: true,
       args: [
         '--disable-gpu',
@@ -31,7 +32,7 @@ export class MailerService {
     });
     const page = await browser.newPage();
     await page.emulateTimezone('America/Mexico_City');
-    const baseUrl = 'http://front:80/reports/';
+    const baseUrl = 'http://localhost:80/reports/';
     await page.goto(`${baseUrl}${patientId}/${isFlat}`, {
       waitUntil: 'networkidle0',
     });
