@@ -34,7 +34,8 @@ export class MailerService {
     await page.emulateTimezone('America/Mexico_City');
     const baseUrl = 'http://161.35.121.95/reports/';
     await page.goto(baseUrl + patientId + '/' + isFlat, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'load',
+      timeout: 0,
     });
     const pdf = await page.pdf({ format: 'A4' });
     await browser.close();
