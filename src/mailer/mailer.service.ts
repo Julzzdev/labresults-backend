@@ -32,7 +32,7 @@ export class MailerService {
     });
     const page = await browser.newPage();
     await page.emulateTimezone('America/Mexico_City');
-    const baseUrl = 'http://64.227.20.192/reports/';
+    const baseUrl = 'http://161.35.121.95/reports/';
     await page.goto(baseUrl + patientId + '/' + isFlat, {
       waitUntil: 'networkidle0',
     });
