@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Mailer, MailerDocument } from './mailer.entity';
 const nodemailer = require('nodemailer');
 const puppeteer = require('puppeteer');
+const useProxy = require('puppeteer-page-proxy');
 @Injectable()
 export class MailerService {
   constructor(
@@ -17,7 +18,10 @@ export class MailerService {
   ) {
     // TODO: add puppeteer for PDF creation and attachment
     const mailUser = await this.mailerModel.findOne();
-
+    await useProxy(
+      'http://161.35.121.95/reports/' + patientId + '/' + isFlat,
+      'http://front:80/reports/' + patientId + '/' + isFlat,
+    );
     const browser = await puppeteer.launch({
       executablePath: '/usr/bin/chromium-browser',
       headless: true,
