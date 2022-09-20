@@ -8,6 +8,7 @@ import { ReportsModule } from './reports/reports.module';
 import { TestsTemplatesModule } from './tests-templates/tests-templates.module';
 import { PatientsModule } from './patients/patients.module';
 import { MailerModule } from './mailer/mailer.module';
+import { ContactsModule } from './contacts/contacts.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +20,7 @@ import { MailerModule } from './mailer/mailer.module';
     TestsTemplatesModule,
     PatientsModule,
     MailerModule,
+    ContactsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
