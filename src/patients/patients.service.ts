@@ -50,12 +50,12 @@ export class PatientsService {
       .find({
         createdAt: {
           $gte: new Date(new Date(startDate).setHours(0o0, 0o0, 0o0)),
-          $lte: new Date(new Date(endDate).setHours(23, 59, 59)),
+          $lt: new Date(new Date(endDate).setHours(23, 59, 59)),
         },
       })
+      .populate('tests', 'name')
       .limit(15 * 1)
       .skip((+page - 1) * 15);
-    // .populate('tests', 'name');
   }
 
   async findOne(id: string): Promise<Patient> {

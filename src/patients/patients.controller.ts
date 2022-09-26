@@ -19,8 +19,8 @@ export class PatientsController {
   @Get('/')
   getPatients(@Query() query: any) {
     return this.patientsService.findAll(
-      (query.startDate = new Date().toString()),
-      (query.endDate = new Date().toString()),
+      query.startDate,
+      query.endDate,
       query.page,
     );
   }
