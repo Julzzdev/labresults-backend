@@ -11,11 +11,7 @@ export class MailerService {
     @InjectModel(Mailer.name) private mailerModel: Model<MailerDocument>,
   ) {}
 
-  async sendLabResults(
-    patientEmail: string,
-    patientId: string,
-    isFlat: string,
-  ) {
+  async sendLabResults(patientEmail: string, url: string) {
     // TODO: add puppeteer for PDF creation and attachment
     const mailUser = await this.mailerModel.findOne();
     // await useProxy(
@@ -36,8 +32,7 @@ export class MailerService {
     });
     const page = await browser.newPage();
     await page.emulateTimezone('America/Mexico_City');
-    const baseUrl = 'http://front:80/reports/';
-    await page.goto(baseUrl + patientId + '/' + isFlat, {
+    await page.goto(url, {
       waitUntil: 'networkidle0',
     });
     const pdf = await page.pdf({ format: 'A4' });
@@ -70,6 +65,8 @@ export class MailerService {
       if (error) {
         return console.log(error);
       }
+
+      return { message: 'Email has been sent', info };
     });
   }
 }
