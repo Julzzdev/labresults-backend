@@ -12,14 +12,14 @@ export class MailerService {
   ) {}
 
   async sendLabResults(patientEmail: string, url: string) {
-    // TODO: add puppeteer for PDF creation and attachment
+    console.log(url);
     const mailUser = await this.mailerModel.findOne();
     // await useProxy(
     //   'http://front:80/reports/' + patientId + '/' + isFlat,
     //   'http://front:80/reports/' + patientId + '/' + isFlat,
     // );
     const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/chromium-browser',
+      // executablePath: '/usr/bin/chromium-browser',
       headless: true,
       args: [
         '--disable-gpu',
