@@ -9,5 +9,8 @@ export class CreateReportDto {
   results: Result[];
 
   @IsString()
+  doctor: string;
+
+  @IsString()
   capturedBy: string;
 }

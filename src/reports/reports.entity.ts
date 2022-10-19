@@ -23,6 +23,9 @@ export class Report {
   @Prop({ type: [ResultSchema], required: true })
   results: Result[];
 
+  @Prop()
+  doctor: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   capturedBy: User;
 

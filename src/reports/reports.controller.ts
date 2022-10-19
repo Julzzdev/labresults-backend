@@ -40,6 +40,7 @@ export class ReportsController {
     return this.reportsService.create(
       body.patient,
       body.results,
+      body.doctor,
       body.capturedBy,
     );
   }
