@@ -23,7 +23,7 @@ export class Report {
   @Prop({ type: [ResultSchema], required: true })
   results: Result[];
 
-  @Prop()
+  @Prop({ type: String, required: true })
   doctor: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
