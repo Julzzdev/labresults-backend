@@ -11,12 +11,7 @@ export class ReportsService {
     @InjectModel(Patient.name) private patientModel: Model<PatientDocument>,
   ) {}
 
-  async create(
-    patient: string,
-    results: Result[],
-    doctor: string,
-    capturedBy: string,
-  ) {
+  async create(patient: string, results: Result[], capturedBy: string) {
     const patientExists = await this.patientModel.findById(patient);
     if (!patientExists) {
       throw new NotFoundException('The patient does not exist');
@@ -24,7 +19,6 @@ export class ReportsService {
     const createdReport = new this.reportModel({
       patient,
       results,
-      doctor,
       capturedBy,
       createdAt: new Date(),
     });
