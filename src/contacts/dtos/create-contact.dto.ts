@@ -30,9 +30,8 @@ export class CreateContactDto {
   @IsBoolean()
   gender: boolean;
 
-  @Type(() => Date)
-  @IsDate()
-  dateOfBirth: Date;
+  @IsString()
+  dateOfBirth: string;
 
   @IsOptional()
   @IsString()
