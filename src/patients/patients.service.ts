@@ -15,7 +15,7 @@ export class PatientsService {
     lastname1: string,
     age: number,
     gender: boolean,
-    dateOfBirth: Date,
+    dateOfBirth: string,
     tests: Test[],
     secondname?: string,
     lastname2?: string,

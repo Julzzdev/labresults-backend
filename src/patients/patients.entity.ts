@@ -25,7 +25,7 @@ export class Patient {
   gender: boolean;
 
   @Prop({ required: false })
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @Prop({ required: false })
   business: string;
