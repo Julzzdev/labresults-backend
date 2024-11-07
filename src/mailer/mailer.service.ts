@@ -43,8 +43,8 @@ export class MailerService {
       port: 465,
       secure: true,
       auth: {
-        user: mailUser.mail,
-        pass: mailUser.password,
+        user: process.env.MAIL,
+        pass: process.env.MAIL_PASSWORD,
       },
     });
 
